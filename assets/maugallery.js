@@ -46,7 +46,7 @@
   // Définition des valeurs par défaut de la modal
   $.fn.mauGallery.defaults = {
     columns: 3,
-    lightBox: true,
+    lightBox: true, 
     // lightboxId: "null",
     lightboxId: null,
     showTags: true,
