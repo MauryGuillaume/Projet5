@@ -46,14 +46,13 @@
   // Définition des valeurs par défaut de la modal
   $.fn.mauGallery.defaults = {
     columns: 3,
-    lightBox: true, 
-    // lightboxId: "null",
+    lightBox: true,
     lightboxId: null,
     showTags: true,
     tagsPosition: "bottom",
     navigation: true
   };
-  // Gestion des clics sur les éléments et les boutons de navigation => A réparer
+  // Gestion des clics sur les éléments et les boutons de navigation
   $.fn.mauGallery.listeners = function(options) {
     $(".gallery-item").on("click", function() {
       if (options.lightBox && $(this).prop("tagName") === "IMG") {
