@@ -53,23 +53,23 @@
     navigation: true
   };
   // Gestion des clics sur les éléments et les boutons de navigation
-  $.fn.mauGallery.listeners = function(options) {
-    $(".gallery-item").on("click", function() {
-      if (options.lightBox && $(this).prop("tagName") === "IMG") {
-        $.fn.mauGallery.methods.openLightBox($(this), options.lightboxId);
-      } else {
-        return;
-      }
-    });
+    $.fn.mauGallery.listeners = function(options) {
+      $(".gallery-item").on("click", function() {
+        if (options.lightBox && $(this).prop("tagName") === "IMG") {
+          $.fn.mauGallery.methods.openLightBox($(this), options.lightboxId);
+        } else {
+          return;
+        }
+      });
 
-    $(".gallery").on("click", ".nav-link", $.fn.mauGallery.methods.filterByTag);
-    $(".gallery").on("click", ".mg-prev", () =>
-      $.fn.mauGallery.methods.prevImage(options.lightboxId)
-    );
-    $(".gallery").on("click", ".mg-next", () =>
-      $.fn.mauGallery.methods.nextImage(options.lightboxId)
-    );
-  };
+      $(".gallery").on("click", ".nav-link", $.fn.mauGallery.methods.filterByTag);
+      $(".gallery").on("click", ".mg-prev", () =>
+        $.fn.mauGallery.methods.prevImage(options.lightboxId)
+      );
+      $(".gallery").on("click", ".mg-next", () =>
+        $.fn.mauGallery.methods.nextImage(options.lightboxId)
+      );
+    };
   $.fn.mauGallery.methods = {
     // Crée un conteneur row
     createRowWrapper(element) {
@@ -129,8 +129,11 @@
         .attr("src", element.attr("src"));
       $(`#${lightboxId}`).modal("toggle");
     },
-    // Image précédente dans la modal => A modifier
-    prevImage() {
+    
+    
+    // Image précédente dans la modal
+    // Version donné dans le git
+    /*prevImage() {
       let activeImage = null;
       $("img.gallery-item:visible").each(function() {
         if ($(this).attr("src") === $(".lightboxImage").attr("src")) {
@@ -156,22 +159,60 @@
           }
         });
       }
-      let index = 0;
-        //next = null;
+      let index = 0,
+        next = null;
 
       $(imagesCollection).each(function(i) {
         if ($(activeImage).attr("src") === $(this).attr("src")) {
           index = i ;
         }
       });
-      index = (index - 1 + imagesCollection.length) % imagesCollection.length;
-        let next = imagesCollection[index];
-        $(".lightboxImage").attr("src", $(next).attr("src"));
-      next = imagesCollection[index] || imagesCollection[imagesCollection.length - 1];
+      next =
+        imagesCollection[index] ||
+        imagesCollection[imagesCollection.length - 1];
       $(".lightboxImage").attr("src", $(next).attr("src"));
+    },*/
+    //Version débuggé
+    prevImage() {
+      let activeImage = null;
+      const visibleImages = $("img.gallery-item:visible");
+      
+      // Trouver l'image active visible
+      visibleImages.each(function() {
+        if ($(this).attr("src") === $(".lightboxImage").attr("src")) {
+          activeImage = $(this);
+        }
+      });
+    
+      // Créer une collection d'images visibles
+      let imagesCollection = [];
+      visibleImages.each(function() {
+        imagesCollection.push($(this));
+      });
+    
+      // Trouver l'index de l'image active
+      let index = -1;
+      for (let i = 0; i < imagesCollection.length; i++) {
+        if (imagesCollection[i].attr("src") === activeImage.attr("src")) {
+          index = i;
+          break;
+        }
+      }
+    
+      // Calculer l'index de l'image précédente
+      index = (index - 1 + imagesCollection.length) % imagesCollection.length;
+    
+      // Trouver l'image précédente
+      let prevImage = imagesCollection[index];
+    
+      // Mettre à jour la source de l'image dans la lightbox
+      $(".lightboxImage").attr("src", prevImage.attr("src"));
     },
-    // Image suivante dans la modal => A modifier
-    nextImage() {
+    
+
+    // Image suivante dans la modal
+    // Version donnée dans le git
+    /*nextImage() {
       let activeImage = null;
       $("img.gallery-item:visible").each(function() {
         if ($(this).attr("src") === $(".lightboxImage").attr("src")) {
@@ -197,20 +238,55 @@
           }
         });
       }
-      let index = 0;
-        //next = null;
+      let index = 0,
+        next = null;
 
       $(imagesCollection).each(function(i) {
         if ($(activeImage).attr("src") === $(this).attr("src")) {
           index = i;
         }
       });
-      index = (index + 1) % imagesCollection.length;
-      let next = imagesCollection[index];
-      $(".lightboxImage").attr("src", $(next).attr("src"));
       next = imagesCollection[index] || imagesCollection[0];
       $(".lightboxImage").attr("src", $(next).attr("src"));
+    },*/
+    //Version débuggé
+    nextImage() {
+      let activeImage = null;
+      const visibleImages = $("img.gallery-item:visible");
+    
+      // Trouver l'image active visible
+      visibleImages.each(function() {
+        if ($(this).attr("src") === $(".lightboxImage").attr("src")) {
+          activeImage = $(this);
+        }
+      });
+    
+      // Créer une collection d'images visibles
+      let imagesCollection = [];
+      visibleImages.each(function() {
+        imagesCollection.push($(this));
+      });
+    
+      // Trouver l'index de l'image active
+      let index = -1;
+      for (let i = 0; i < imagesCollection.length; i++) {
+        if (imagesCollection[i].attr("src") === activeImage.attr("src")) {
+          index = i;
+          break;
+        }
+      }
+    
+      // Calculer l'index de l'image suivante
+      index = (index + 1) % imagesCollection.length;
+    
+      // Trouver l'image suivante
+      let nextImage = imagesCollection[index];
+    
+      // Mettre à jour la source de l'image dans la lightbox
+      $(".lightboxImage").attr("src", nextImage.attr("src"));
     },
+    
+
     // Crée la modal
     createLightBox(gallery, lightboxId, navigation) {
       gallery.append(`<div class="modal fade" id="${
@@ -258,8 +334,10 @@
       if ($(this).hasClass("active-tag")) {
         return;
       }
-      $(".nav-link").removeClass("active active-tag"); // a remplacer (".active-tag")
-      $(this).addClass("active"); //a remplacer ("active-tag")
+      // $(".active-tag").removeClass("active active-tag");
+      $(".nav-link").removeClass("active active-tag");
+      //$(this).addClass("active-tag");
+      $(this).addClass("active");
 
       var tag = $(this).data("images-toggle");
 
