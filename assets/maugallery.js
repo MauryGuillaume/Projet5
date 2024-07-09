@@ -1,6 +1,6 @@
 // $ remplace jQuery
 (function($) {
-  // Création de la gallerie
+  // Création de la galerie
   $.fn.mauGallery = function(options) {
     var options = $.extend($.fn.mauGallery.defaults, options);
     var tagsCollection = [];
@@ -177,20 +177,20 @@
       let activeImage = null;
       const visibleImages = $("img.gallery-item:visible");
       
-      // Trouver l'image active visible
+      // Trouve l'image active visible
       visibleImages.each(function() {
         if ($(this).attr("src") === $(".lightboxImage").attr("src")) {
           activeImage = $(this);
         }
       });
     
-      // Créer une collection d'images visibles
+      // Crée une collection d'images visibles
       let imagesCollection = [];
       visibleImages.each(function() {
         imagesCollection.push($(this));
       });
     
-      // Trouver l'index de l'image active
+      // Trouve l'index de l'image active
       let index = -1;
       for (let i = 0; i < imagesCollection.length; i++) {
         if (imagesCollection[i].attr("src") === activeImage.attr("src")) {
@@ -199,13 +199,13 @@
         }
       }
     
-      // Calculer l'index de l'image précédente
+      // Calcule l'index de l'image précédente
       index = (index - 1 + imagesCollection.length) % imagesCollection.length;
     
-      // Trouver l'image précédente
+      // Trouve l'image précédente
       let prevImage = imagesCollection[index];
     
-      // Mettre à jour la source de l'image dans la lightbox
+      // Met à jour la source de l'image dans la lightbox
       $(".lightboxImage").attr("src", prevImage.attr("src"));
     },
     
@@ -254,20 +254,20 @@
       let activeImage = null;
       const visibleImages = $("img.gallery-item:visible");
     
-      // Trouver l'image active visible
+      // Trouve l'image active visible
       visibleImages.each(function() {
         if ($(this).attr("src") === $(".lightboxImage").attr("src")) {
           activeImage = $(this);
         }
       });
     
-      // Créer une collection d'images visibles
+      // Crée une collection d'images visibles
       let imagesCollection = [];
       visibleImages.each(function() {
         imagesCollection.push($(this));
       });
     
-      // Trouver l'index de l'image active
+      // Trouve l'index de l'image active
       let index = -1;
       for (let i = 0; i < imagesCollection.length; i++) {
         if (imagesCollection[i].attr("src") === activeImage.attr("src")) {
@@ -276,13 +276,13 @@
         }
       }
     
-      // Calculer l'index de l'image suivante
+      // Calcule l'index de l'image suivante
       index = (index + 1) % imagesCollection.length;
     
-      // Trouver l'image suivante
+      // Trouve l'image suivante
       let nextImage = imagesCollection[index];
     
-      // Mettre à jour la source de l'image dans la lightbox
+      // Met à jour la source de l'image dans la lightbox
       $(".lightboxImage").attr("src", nextImage.attr("src"));
     },
     
@@ -329,7 +329,7 @@
         console.error(`Unknown tags position: ${position}`);
       }
     },
-    // Filtrer par tag
+    // Filtre par tag
     filterByTag() {
       if ($(this).hasClass("active-tag")) {
         return;
